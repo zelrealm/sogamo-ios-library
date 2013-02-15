@@ -1,0 +1,367 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F43FE9481622B407007059D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43FE9471622B407007059D3 /* UIKit.framework */; };
+		F43FE94A1622B407007059D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43FE9491622B407007059D3 /* Foundation.framework */; };
+		F43FE94C1622B407007059D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43FE94B1622B407007059D3 /* CoreGraphics.framework */; };
+		F43FE9521622B407007059D3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F43FE9501622B407007059D3 /* InfoPlist.strings */; };
+		F43FE9541622B407007059D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F43FE9531622B407007059D3 /* main.m */; };
+		F43FE9581622B407007059D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F43FE9571622B407007059D3 /* AppDelegate.m */; };
+		F43FE95B1622B407007059D3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F43FE95A1622B407007059D3 /* ViewController.m */; };
+		F43FE95E1622B407007059D3 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F43FE95C1622B407007059D3 /* ViewController.xib */; };
+		F43FE9831622DCC5007059D3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43FE9821622DCC5007059D3 /* SystemConfiguration.framework */; };
+		F43FE98B162408F2007059D3 /* Facebook Login Button.png in Resources */ = {isa = PBXBuildFile; fileRef = F43FE989162408F2007059D3 /* Facebook Login Button.png */; };
+		F43FE98C162408F2007059D3 /* Facebook Login Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F43FE98A162408F2007059D3 /* Facebook Login Button@2x.png */; };
+		F4C9FDCD164FDE24007B7C92 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4C9FDCC164FDE24007B7C92 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F4C9FDCF164FDE2E007B7C92 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4C9FDCE164FDE2E007B7C92 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F4C9FDD1164FDE40007B7C92 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4C9FDD0164FDE40007B7C92 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F4C9FDD3164FDF39007B7C92 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4C9FDD2164FDF39007B7C92 /* FacebookSDK.framework */; };
+		F4C9FDD8164FDF41007B7C92 /* sogamo_api_definitions.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4C9FDD6164FDF41007B7C92 /* sogamo_api_definitions.plist */; };
+		F4C9FDD9164FDF41007B7C92 /* SogamoAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4C9FDD7164FDF41007B7C92 /* SogamoAPI.framework */; };
+		F4C9FDE9164FE8B3007B7C92 /* SampleCallsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C9FDE7164FE8B3007B7C92 /* SampleCallsTableViewController.m */; };
+		F4C9FDEA164FE8B3007B7C92 /* SampleCallsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4C9FDE8164FE8B3007B7C92 /* SampleCallsTableViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F43FE9431622B407007059D3 /* Sample Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sample Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F43FE9471622B407007059D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F43FE9491622B407007059D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F43FE94B1622B407007059D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F43FE94F1622B407007059D3 /* Sample Project-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sample Project-Info.plist"; sourceTree = "<group>"; };
+		F43FE9511622B407007059D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F43FE9531622B407007059D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F43FE9551622B407007059D3 /* Sample Project-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sample Project-Prefix.pch"; sourceTree = "<group>"; };
+		F43FE9561622B407007059D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F43FE9571622B407007059D3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F43FE9591622B407007059D3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		F43FE95A1622B407007059D3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F43FE95D1622B407007059D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		F43FE9821622DCC5007059D3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F43FE989162408F2007059D3 /* Facebook Login Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Facebook Login Button.png"; sourceTree = "<group>"; };
+		F43FE98A162408F2007059D3 /* Facebook Login Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Facebook Login Button@2x.png"; sourceTree = "<group>"; };
+		F4C9FDCC164FDE24007B7C92 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		F4C9FDCE164FDE2E007B7C92 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		F4C9FDD0164FDE40007B7C92 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		F4C9FDD2164FDF39007B7C92 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "Sample Project/External/FacebookSDK.framework"; sourceTree = "<group>"; };
+		F4C9FDD6164FDF41007B7C92 /* sogamo_api_definitions.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = sogamo_api_definitions.plist; sourceTree = "<group>"; };
+		F4C9FDD7164FDF41007B7C92 /* SogamoAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SogamoAPI.framework; sourceTree = "<group>"; };
+		F4C9FDE6164FE8B3007B7C92 /* SampleCallsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleCallsTableViewController.h; sourceTree = "<group>"; };
+		F4C9FDE7164FE8B3007B7C92 /* SampleCallsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleCallsTableViewController.m; sourceTree = "<group>"; };
+		F4C9FDE8164FE8B3007B7C92 /* SampleCallsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SampleCallsTableViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F43FE9401622B407007059D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4C9FDD1164FDE40007B7C92 /* Social.framework in Frameworks */,
+				F4C9FDCF164FDE2E007B7C92 /* AdSupport.framework in Frameworks */,
+				F4C9FDCD164FDE24007B7C92 /* Accounts.framework in Frameworks */,
+				F43FE9831622DCC5007059D3 /* SystemConfiguration.framework in Frameworks */,
+				F43FE9481622B407007059D3 /* UIKit.framework in Frameworks */,
+				F43FE94A1622B407007059D3 /* Foundation.framework in Frameworks */,
+				F43FE94C1622B407007059D3 /* CoreGraphics.framework in Frameworks */,
+				F4C9FDD3164FDF39007B7C92 /* FacebookSDK.framework in Frameworks */,
+				F4C9FDD9164FDF41007B7C92 /* SogamoAPI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F43FE9381622B407007059D3 = {
+			isa = PBXGroup;
+			children = (
+				F43FE94D1622B407007059D3 /* Sample Project */,
+				F43FE988162408F2007059D3 /* Resources */,
+				F43FE9461622B407007059D3 /* Frameworks */,
+				F43FE9441622B407007059D3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F43FE9441622B407007059D3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F43FE9431622B407007059D3 /* Sample Project.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F43FE9461622B407007059D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F4C9FDD4164FDF41007B7C92 /* SogamoAPI.embeddedframework */,
+				F4C9FDD2164FDF39007B7C92 /* FacebookSDK.framework */,
+				F4C9FDD0164FDE40007B7C92 /* Social.framework */,
+				F4C9FDCE164FDE2E007B7C92 /* AdSupport.framework */,
+				F4C9FDCC164FDE24007B7C92 /* Accounts.framework */,
+				F43FE9821622DCC5007059D3 /* SystemConfiguration.framework */,
+				F43FE9471622B407007059D3 /* UIKit.framework */,
+				F43FE9491622B407007059D3 /* Foundation.framework */,
+				F43FE94B1622B407007059D3 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F43FE94D1622B407007059D3 /* Sample Project */ = {
+			isa = PBXGroup;
+			children = (
+				F43FE9561622B407007059D3 /* AppDelegate.h */,
+				F43FE9571622B407007059D3 /* AppDelegate.m */,
+				F43FE9591622B407007059D3 /* ViewController.h */,
+				F43FE95A1622B407007059D3 /* ViewController.m */,
+				F43FE95C1622B407007059D3 /* ViewController.xib */,
+				F43FE94E1622B407007059D3 /* Supporting Files */,
+				F4C9FDE6164FE8B3007B7C92 /* SampleCallsTableViewController.h */,
+				F4C9FDE7164FE8B3007B7C92 /* SampleCallsTableViewController.m */,
+				F4C9FDE8164FE8B3007B7C92 /* SampleCallsTableViewController.xib */,
+			);
+			path = "Sample Project";
+			sourceTree = "<group>";
+		};
+		F43FE94E1622B407007059D3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F43FE94F1622B407007059D3 /* Sample Project-Info.plist */,
+				F43FE9501622B407007059D3 /* InfoPlist.strings */,
+				F43FE9531622B407007059D3 /* main.m */,
+				F43FE9551622B407007059D3 /* Sample Project-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F43FE988162408F2007059D3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F43FE989162408F2007059D3 /* Facebook Login Button.png */,
+				F43FE98A162408F2007059D3 /* Facebook Login Button@2x.png */,
+			);
+			name = Resources;
+			path = "Sample Project/Resources";
+			sourceTree = "<group>";
+		};
+		F4C9FDD4164FDF41007B7C92 /* SogamoAPI.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				F4C9FDD5164FDF41007B7C92 /* Resources */,
+				F4C9FDD7164FDF41007B7C92 /* SogamoAPI.framework */,
+			);
+			name = SogamoAPI.embeddedframework;
+			path = "Sample Project/External/SogamoAPI.embeddedframework";
+			sourceTree = "<group>";
+		};
+		F4C9FDD5164FDF41007B7C92 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F4C9FDD6164FDF41007B7C92 /* sogamo_api_definitions.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F43FE9421622B407007059D3 /* Sample Project */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F43FE9611622B407007059D3 /* Build configuration list for PBXNativeTarget "Sample Project" */;
+			buildPhases = (
+				F43FE93F1622B407007059D3 /* Sources */,
+				F43FE9401622B407007059D3 /* Frameworks */,
+				F43FE9411622B407007059D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Sample Project";
+			productName = "Sample Project";
+			productReference = F43FE9431622B407007059D3 /* Sample Project.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F43FE93A1622B407007059D3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "White Dwarf Labs";
+			};
+			buildConfigurationList = F43FE93D1622B407007059D3 /* Build configuration list for PBXProject "Sample Project" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F43FE9381622B407007059D3;
+			productRefGroup = F43FE9441622B407007059D3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F43FE9421622B407007059D3 /* Sample Project */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F43FE9411622B407007059D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F43FE9521622B407007059D3 /* InfoPlist.strings in Resources */,
+				F43FE95E1622B407007059D3 /* ViewController.xib in Resources */,
+				F43FE98B162408F2007059D3 /* Facebook Login Button.png in Resources */,
+				F43FE98C162408F2007059D3 /* Facebook Login Button@2x.png in Resources */,
+				F4C9FDD8164FDF41007B7C92 /* sogamo_api_definitions.plist in Resources */,
+				F4C9FDEA164FE8B3007B7C92 /* SampleCallsTableViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F43FE93F1622B407007059D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F43FE9541622B407007059D3 /* main.m in Sources */,
+				F43FE9581622B407007059D3 /* AppDelegate.m in Sources */,
+				F43FE95B1622B407007059D3 /* ViewController.m in Sources */,
+				F4C9FDE9164FE8B3007B7C92 /* SampleCallsTableViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F43FE9501622B407007059D3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F43FE9511622B407007059D3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F43FE95C1622B407007059D3 /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F43FE95D1622B407007059D3 /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F43FE95F1622B407007059D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F43FE9601622B407007059D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F43FE9621622B407007059D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Sample Project/External\"",
+					"\"$(SRCROOT)/Sample Project/External/SogamoAPI.embeddedframework\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Sample Project/Sample Project-Prefix.pch";
+				INFOPLIST_FILE = "Sample Project/Sample Project-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-lsqlite3.0";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F43FE9631622B407007059D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Sample Project/External\"",
+					"\"$(SRCROOT)/Sample Project/External/SogamoAPI.embeddedframework\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Sample Project/Sample Project-Prefix.pch";
+				INFOPLIST_FILE = "Sample Project/Sample Project-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-lsqlite3.0";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F43FE93D1622B407007059D3 /* Build configuration list for PBXProject "Sample Project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F43FE95F1622B407007059D3 /* Debug */,
+				F43FE9601622B407007059D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F43FE9611622B407007059D3 /* Build configuration list for PBXNativeTarget "Sample Project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F43FE9621622B407007059D3 /* Debug */,
+				F43FE9631622B407007059D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F43FE93A1622B407007059D3 /* Project object */;
+}
