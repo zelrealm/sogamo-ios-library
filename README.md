@@ -13,7 +13,7 @@ The repository contains two folders:
 2. iOS 5.0 or later
 
 # Setup #
-Adding the Mixpanel to your Xcode project is just a few easy steps:
+Adding the Sogamo to your Xcode project is just a few easy steps:
 
 1. Add the SogamoAPi Framework
 	a. Drag and drop the **SogamoAPI.embeddedframework** folder into your project. 
@@ -46,13 +46,15 @@ You can set the facebookId: parameter  to nil if that information is unavailable
 ## Tracking Events ##
 After initializing the SogamoAPI singleton object, you are ready to track events. This can be done with the following method:
 
-	SogamoAPI *sogamoAPI = [SogamoAPI sharedAPI];
-    [sogamoAPI trackEventWithName:@"playerTopUp" 
-                           params:[NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"First top up", @"remarks",
-                                   [NSNumber numberWithInteger:100], @"currencyEarned",
-                                   [NSNumber numberWithInteger:200], @"currencyBalance",
-                                   [NSDate date], @"logDatetime", nil]];
+```objective-c
+SogamoAPI *sogamoAPI = [SogamoAPI sharedAPI];
+[sogamoAPI trackEventWithName:@"playerTopUp" 
+			params:[NSDictionary dictionaryWithObjectsAndKeys:
+				@"First top up", @"remarks",
+				[NSNumber numberWithInteger:100], @"currencyEarned",
+				[NSNumber numberWithInteger:200], @"currencyBalance",
+				[NSDate date], @"logDatetime", nil]];
+```
 
 Note: Event params are to be stored in a NSDictionary object. Numeric parameters must be wrapped inside a NSNumber object, and similarly, datetime parameters are to be represented as NSDate objects.
 
