@@ -37,7 +37,7 @@
                                    @"Muhammad", @"firstname",
                                    @"Mohsin", @"lastname",
                                    nil];
-    [sharedAPI startSessionWithAPIKey:@"e13e6a3595aa4287a6a14a3d0ee7df30" playerId:nil playerDetails:playerDetails];
+    [sharedAPI startSessionWithAPIKey:@"4f38af3614434a03af915278b5fc2913" playerId:nil playerDetails:playerDetails];
 //    [sharedAPI setFlushInterval:10];
     return YES;
 }
