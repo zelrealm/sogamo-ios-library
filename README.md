@@ -1,11 +1,11 @@
 # Sogamo Analytics API on iOS #
-If you want to integrate th Sogamo Analytics API with your iPhone / iPad application, first download the latest [zip archive](http://sogamp.com/) and extract the files. 
+If you want to integrate the Sogamo Analytics API with your iPhone / iPad application, first download the latest [zip archive](http://sogamo.com/) and extract the files. 
 
 The repository contains two folders:
 
 1. SogamoAPI.framework - The Sogamo iOS Framework
 2. HelloSogamo - A sample application that demonstrates how to use the SogamoAPI.
-3. Docs - API Reference
+3. Docs
 
 # Requirements #
 
@@ -13,9 +13,9 @@ The repository contains two folders:
 2. iOS 5.0 or later
 
 # Setup #
-Adding the Mixpanel to your Xcode project is just a few easy steps:
+Adding the SogamoAPI to your Xcode project is just a few easy steps:
 
-1. Add the SogamoAPi Framework
+1. Add the SogamoAPI Framework
 	a. Drag and drop the **SogamoAPI.embeddedframework** folder into your project. 
 	b. Check the "Copy items into destination's group's folder" and select 'Create groups for any added folders'
 ![Copy][Copy into Xcode]
