@@ -113,17 +113,13 @@
 
 - (NSString *) convertParamToString:(id)paramObject
 {
-    // NSDateFormatter for formatting all dates correctly
-    NSDateFormatter *dateFormatter = SAFE_ARC_AUTORELEASE([[NSDateFormatter alloc] init]);
-    [dateFormatter setDateFormat:@"EEE, dd MMM yyyy hh:mm:ss z"];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]]; // Set the time format to the GMT Timezone
-    
     NSString *paramString = nil;
     
     if ([paramObject isKindOfClass:[NSString class]]) {
         paramString = (NSString *)paramObject;
     } else if ([paramObject isKindOfClass:[NSDate class]]) {
-        paramString = [dateFormatter stringFromDate:(NSDate *)paramObject];
+        long unixTimestamp = [(NSDate *)paramObject timeIntervalSince1970];
+        paramString = [NSString stringWithFormat:@"%ld", unixTimestamp];
     } else if ([paramObject isKindOfClass:[NSNumber class]]) {
         paramString = [(NSNumber *)paramObject stringValue];
     }    
