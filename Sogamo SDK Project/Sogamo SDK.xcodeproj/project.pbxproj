@@ -11,6 +11,7 @@
 		F40F08101610557100D0E876 /* sogamo_api_definitions.plist in Resources */ = {isa = PBXBuildFile; fileRef = F40F080E1610557100D0E876 /* sogamo_api_definitions.plist */; };
 		F43C6BA7161AC6D7006B7421 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43C6BA5161AC6C0006B7421 /* SystemConfiguration.framework */; };
 		F43C6BA8161AC769006B7421 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43C6BA5161AC6C0006B7421 /* SystemConfiguration.framework */; };
+		F450676816E86BFE00FAF500 /* SogamoAuthenticationResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F450676716E86BFE00FAF500 /* SogamoAuthenticationResponse.m */; };
 		F474998415FF508800BA448A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F474998315FF508800BA448A /* UIKit.framework */; };
 		F474998615FF508800BA448A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F474998515FF508800BA448A /* Foundation.framework */; };
 		F474998815FF508800BA448A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F474998715FF508800BA448A /* CoreGraphics.framework */; };
@@ -45,6 +46,8 @@
 		F40F080E1610557100D0E876 /* sogamo_api_definitions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sogamo_api_definitions.plist; sourceTree = "<group>"; };
 		F438AF7D164E1339002961EF /* ARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCMacros.h; sourceTree = "<group>"; };
 		F43C6BA5161AC6C0006B7421 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F450676616E86BFE00FAF500 /* SogamoAuthenticationResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SogamoAuthenticationResponse.h; sourceTree = "<group>"; };
+		F450676716E86BFE00FAF500 /* SogamoAuthenticationResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SogamoAuthenticationResponse.m; sourceTree = "<group>"; };
 		F474997F15FF508800BA448A /* Sogamo Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sogamo Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F474998315FF508800BA448A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F474998515FF508800BA448A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -218,6 +221,8 @@
 				F49AD19D1637E6A8002B3EEF /* SogamoReachability.m */,
 				F49AD1AA1637E73B002B3EEF /* SogamoSession.h */,
 				F49AD1AB1637E73B002B3EEF /* SogamoSession.m */,
+				F450676616E86BFE00FAF500 /* SogamoAuthenticationResponse.h */,
+				F450676716E86BFE00FAF500 /* SogamoAuthenticationResponse.m */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				F49AD1A41637E6A8002B3EEF /* SogamoReachability.m in Sources */,
 				F49AD1A81637E715002B3EEF /* SogamoEvent.m in Sources */,
 				F49AD1AC1637E73B002B3EEF /* SogamoSession.m in Sources */,
+				F450676816E86BFE00FAF500 /* SogamoAuthenticationResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

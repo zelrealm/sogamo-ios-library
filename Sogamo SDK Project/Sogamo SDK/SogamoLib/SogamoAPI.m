@@ -13,12 +13,6 @@
 #define SESSIONS_DATA_FILE_NAME @"sogamo_sessions_data.bin"
 #define API_DEFINITIONS_FILE_NAME @"sogamo_api_definitions.plist"
 
-#define AUTHENTICATION_RESPONSE_GAME_ID_KEY @"game_id"
-#define AUTHENTICATION_RESPONSE_SESSION_ID_KEY @"session_id"
-#define AUTHENTICATION_RESPONSE_LOG_COLLECTOR_URL_KEY @"lc_url"
-#define AUTHENTICATION_RESPONSE_PLAYER_ID_KEY @"player_id"
-#define AUTHENTICATION_RESPONSE_IS_OFFLINE_SESSION_KEY @"is_offline_session"
-
 #define SESSIONS_DATA_EVENTS_KEY @"events"
 #define SESSIONS_DATA_GAME_ID_KEY @"game_id"
 #define SESSIONS_DATA_SESSIONS_KEY @"sessions"
@@ -45,6 +39,7 @@
 
 #import "SogamoAPI.h"
 
+#import "SogamoAuthenticationResponse.h"
 #import "SogamoDeviceUtilities.h"
 #import "SogamoJSONUtilities.h"
 #import "SogamoReachability.h"
@@ -70,8 +65,9 @@
 
 #pragma mark Authentication
 
-- (NSDictionary *) authenticateWithAPIKey:(NSString *)anAPIKey playerId:(NSString *)aPlayerId;
-- (SogamoSession *) createSessionWithAuthenticationResponse:(NSDictionary *)authenticationResponseDict;
+- (SogamoAuthenticationResponse *) authenticateWithAPIKey:(NSString *)anAPIKey playerId:(NSString *)aPlayerId;
+- (SogamoSession *) createSessionWithAuthenticationResponse:(SogamoAuthenticationResponse *)authenticationResponse;
+- (SogamoSession *) createOfflineSession;
 
 #pragma mark Track Events
 
@@ -232,9 +228,9 @@ static id sharedAPI = nil;
 
 #pragma mark Authentication
 
-- (NSDictionary *) authenticateWithAPIKey:(NSString *)anAPIKey playerId:(NSString *)aPlayerId
+- (SogamoAuthenticationResponse *) authenticateWithAPIKey:(NSString *)anAPIKey playerId:(NSString *)aPlayerId
 {
-    NSDictionary *authenticationResponseDict = nil;
+    SogamoAuthenticationResponse *authenticationResponse = nil;
     
     if ([SogamoReachability isURLStringReachable:AUTHENTICATION_SERVER_URL]) {
         NSString *urlString = AUTHENTICATION_SERVER_URL;
@@ -256,12 +252,10 @@ static id sharedAPI = nil;
             if (decodingError) {
                 NSLog(@"Decoding error (%i %@): %@", response.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:response.statusCode], [decodingError localizedDescription]);
                 [[NSNotificationCenter defaultCenter] postNotificationName:SogamoAPIDidFailToAuthenticateNotification object:decodingError];
-            } else {  
-                if ([self validateAuthenticationResponse:(NSDictionary *)decodedData]) {
-                    authenticationResponseDict = (NSDictionary *)decodedData;
-                    [[NSNotificationCenter defaultCenter] postNotificationName:SogamoAPIDidSuccessfullyAuthenticateNotification
-                                                                        object:nil];
-                }
+            } else {
+                authenticationResponse = [[SogamoAuthenticationResponse alloc] initWithDictionary:(NSDictionary *)decodedData];
+                [[NSNotificationCenter defaultCenter] postNotificationName:SogamoAPIDidSuccessfullyAuthenticateNotification
+                                                                    object:nil];
             }
         } else {
             // Failed request
@@ -272,38 +266,35 @@ static id sharedAPI = nil;
         NSLog(@"Server not reachable. Authentication request failed");
     }
     
-    return authenticationResponseDict;
+    return authenticationResponse;
 }
 
-- (SogamoSession *) createSessionWithAuthenticationResponse:(NSDictionary *)authenticationResponseDict
+- (SogamoSession *) createSessionWithAuthenticationResponse:(SogamoAuthenticationResponse *)authenticationResponse
 {
-    NSString *sessionId = nil;
-    NSString *aPlayerId = nil;
-    NSInteger gameId = -1;
-    NSString *logCollectorURL = nil;
-    BOOL isOfflineSession = NO;
-    if (authenticationResponseDict) {
-        sessionId = [authenticationResponseDict objectForKey:AUTHENTICATION_RESPONSE_SESSION_ID_KEY];
-        aPlayerId = [authenticationResponseDict objectForKey:AUTHENTICATION_RESPONSE_PLAYER_ID_KEY];
-        gameId = [[authenticationResponseDict objectForKey:AUTHENTICATION_RESPONSE_GAME_ID_KEY] integerValue];
-        logCollectorURL = [authenticationResponseDict objectForKey:AUTHENTICATION_RESPONSE_LOG_COLLECTOR_URL_KEY];
-        isOfflineSession = NO;
-    } else {
-        NSLog(@"Authentication failed. Generating Offline Session Key...");
-        sessionId = [self generateOfflineSessionKey];
-        aPlayerId = self.playerId;
-        gameId = -1;
-        logCollectorURL = @"";
-        isOfflineSession = YES;
-        
-        NSLog (@"Offline Session Key generated: %@", sessionId);        
+    if (!authenticationResponse) {
+        NSLog(@"Invalid authentication response! Creating offline response instead");
+        return [self createOfflineSession];
     }
     
-    SogamoSession *newSession = SAFE_ARC_AUTORELEASE([[SogamoSession alloc] initWithSessionId:sessionId
-                                                                                     playerId:aPlayerId
-                                                                                       gameId:gameId
-                                                                                        lcURL:logCollectorURL
-                                                                             isOfflineSession:isOfflineSession]);
+    SogamoSession *newSession = SAFE_ARC_AUTORELEASE([[SogamoSession alloc] initWithSessionId:authenticationResponse.sessionId
+                                                                                     playerId:authenticationResponse.playerId
+                                                                                       gameId:authenticationResponse.gameId
+                                                                              logCollectorURL:authenticationResponse.logCollectorURL
+                                                                          suggestionServerURL:authenticationResponse.suggestionServerURL
+                                                                             isOfflineSession:NO]);
+    
+    return newSession;
+}
+
+- (SogamoSession *) createOfflineSession
+{
+    NSLog(@"Generating Offline Session");
+    SogamoSession *newSession = SAFE_ARC_AUTORELEASE([[SogamoSession alloc] initWithSessionId:[self generateOfflineSessionKey]
+                                                                                     playerId:self.playerId
+                                                                                       gameId:-1
+                                                                              logCollectorURL:nil
+                                                                          suggestionServerURL:nil
+                                                                             isOfflineSession:YES]);
     
     return newSession;
 }
@@ -383,7 +374,8 @@ static id sharedAPI = nil;
         return;
     }
     
-    NSURL *flushURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", self.currentSession.logCollectorURL]];
+//    NSURL *flushURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", self.currentSession.logCollectorURL]];
+    NSURL *flushURL = self.currentSession.logCollectorURL;
     if (flushURL) {
         flushURL = [flushURL URLByAppendingPathComponent:FLUSH_URL_SUFFIX];
     } else {
@@ -516,33 +508,6 @@ static id sharedAPI = nil;
 
 #pragma mark Validation
 
-- (BOOL) validateAuthenticationResponse:(NSDictionary *)authenticationResponse
-{    
-    BOOL isValid = YES;
-    
-    if (![authenticationResponse objectForKey:AUTHENTICATION_RESPONSE_SESSION_ID_KEY]) {
-        isValid = NO;
-        NSLog(@"Session Key Missing!");
-    }
-    
-    if (![authenticationResponse objectForKey:AUTHENTICATION_RESPONSE_PLAYER_ID_KEY]) {
-        isValid = NO;
-        NSLog(@"Player ID Missing!");
-    }    
-    
-    if (![authenticationResponse objectForKey:AUTHENTICATION_RESPONSE_LOG_COLLECTOR_URL_KEY]) {
-        isValid = NO;
-        NSLog(@"Log Collector URL Missing!");        
-    }    
-    
-    if (![authenticationResponse objectForKey:AUTHENTICATION_RESPONSE_GAME_ID_KEY]) {
-        isValid = NO;
-        NSLog(@"Game Id Missing!");
-    }
-    
-    return isValid;
-}
-
 - (BOOL) validateEvent:(SogamoEvent *)event
 {
     if (!self.apiDefinitionsData) {
@@ -622,8 +587,13 @@ static id sharedAPI = nil;
     if (self.currentSession && self.currentSession.startDate) {
         if ([self hasCurrentSessionExpired]) {
             NSLog(@"Current session has expired. Getting new session key...");
-            NSDictionary *authenticationResponse = [self authenticateWithAPIKey:self.apiKey playerId:self.playerId];
-            self.currentSession = [self createSessionWithAuthenticationResponse:authenticationResponse];
+            SogamoAuthenticationResponse *authenticationResponse = [self authenticateWithAPIKey:self.apiKey playerId:self.playerId];
+            if (authenticationResponse) {
+                self.currentSession = [self createSessionWithAuthenticationResponse:authenticationResponse];
+            } else {
+                self.currentSession = [self createOfflineSession];
+            }
+
             [self privateTrackEventWithName:@"session" params:self.playerDetails forSession:self.currentSession];
             [self.allSessions addObject:self.currentSession];
             NSLog(@"New session created! Session ID: %@", self.currentSession.sessionId);
@@ -634,8 +604,13 @@ static id sharedAPI = nil;
         }
     } else {
         NSLog(@"No session detected. Creating a new one...");
-        NSDictionary *authenticationResponse = [self authenticateWithAPIKey:self.apiKey playerId:self.playerId];
-        self.currentSession = [self createSessionWithAuthenticationResponse:authenticationResponse];
+        SogamoAuthenticationResponse *authenticationResponse = [self authenticateWithAPIKey:self.apiKey playerId:self.playerId];
+        if (authenticationResponse) {
+            self.currentSession = [self createSessionWithAuthenticationResponse:authenticationResponse];
+        } else {
+            self.currentSession = [self createOfflineSession];
+        }
+        
         [self privateTrackEventWithName:@"session" params:self.playerDetails forSession:self.currentSession];
         [self.allSessions addObject:self.currentSession];
         NSLog(@"New session created! Session ID: %@", self.currentSession.sessionId);
@@ -653,11 +628,12 @@ static id sharedAPI = nil;
     for (SogamoSession *session in self.allSessions) {
         if (session.isOfflineSession) {
             // Request a new session key for the offline session
-            NSDictionary *authenticationResponse = [self authenticateWithAPIKey:self.apiKey playerId:self.playerId];
+            SogamoAuthenticationResponse *authenticationResponse = [self authenticateWithAPIKey:self.apiKey playerId:self.playerId];
             if (authenticationResponse) {
-                session.sessionId = [authenticationResponse objectForKey:AUTHENTICATION_RESPONSE_SESSION_ID_KEY];
-                session.gameId = [[authenticationResponse objectForKey:AUTHENTICATION_RESPONSE_GAME_ID_KEY] integerValue];
-                session.logCollectorURL = [authenticationResponse objectForKey:AUTHENTICATION_RESPONSE_LOG_COLLECTOR_URL_KEY];
+                session.sessionId = authenticationResponse.sessionId;
+                session.gameId = authenticationResponse.gameId;
+                session.logCollectorURL = authenticationResponse.logCollectorURL;
+                session.suggestionServerURL = authenticationResponse.suggestionServerURL;
                 session.isOfflineSession = NO;
                 
                 // Update all the tracked events data
@@ -702,7 +678,7 @@ static id sharedAPI = nil;
         if ([self.allSessions count] > 0) {
             self.currentSession = [self.allSessions objectAtIndex:[self.allSessions count] - 1];
         }
-        NSLog(@"All Sessions: %@", self.allSessions);
+//        NSLog(@"All Sessions: %@", self.allSessions);
     } else {
         NSLog(@"No Sessions Data file found!");
         self.allSessions = [NSMutableArray array];

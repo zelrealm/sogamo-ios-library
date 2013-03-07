@@ -9,6 +9,7 @@
 #define SESSION_ID_KEY @"sessionId"
 #define PLAYER_ID_KEY @"playerId"
 #define LOG_COLLECTOR_URL_KEY @"logCollectorURL"
+#define SUGGESTION_SERVER_URL_KEY @"suggestionServerURL"
 #define GAME_ID_KEY @"gameId"
 #define START_DATE_KEY @"startDate"
 #define IS_OFFLINE_SESSION_KEY @"isOfflineSession"
@@ -26,10 +27,11 @@
 
 #pragma mark - Constructor
 
-- (id)initWithSessionId:(NSString *)aSessionId 
-               playerId:(NSString *)aPlayerId 
-                 gameId:(NSInteger)aGameId 
-                  lcURL:(NSString *)lcURL 
+- (id)initWithSessionId:(NSString *)aSessionId
+               playerId:(NSString *)aPlayerId
+                 gameId:(NSInteger)aGameId
+        logCollectorURL:(NSURL *)logCollectorURL
+    suggestionServerURL:(NSURL *)suggestionServerURL
        isOfflineSession:(BOOL)isOffline
 {
     self = [super init];
@@ -37,7 +39,8 @@
         _sessionId = SAFE_ARC_RETAIN(aSessionId);
         _playerId = SAFE_ARC_RETAIN(aPlayerId);
         _gameId = aGameId;
-        _logCollectorURL = [[NSString alloc] initWithString:lcURL];
+        _logCollectorURL = SAFE_ARC_RETAIN(logCollectorURL);
+        _suggestionServerURL = SAFE_ARC_RETAIN(suggestionServerURL);
         _startDate = [[NSDate alloc] init];
         _isOfflineSession = isOffline;
         _events = [[NSMutableArray alloc] init];
@@ -54,6 +57,7 @@
         _sessionId = SAFE_ARC_RETAIN([coder decodeObjectForKey:SESSION_ID_KEY]);
         _playerId = SAFE_ARC_RETAIN([coder decodeObjectForKey:PLAYER_ID_KEY]);
         _logCollectorURL = SAFE_ARC_RETAIN([coder decodeObjectForKey:LOG_COLLECTOR_URL_KEY]);
+        _suggestionServerURL = SAFE_ARC_RETAIN([coder decodeObjectForKey:SUGGESTION_SERVER_URL_KEY]);
         _startDate = SAFE_ARC_RETAIN([coder decodeObjectForKey:START_DATE_KEY]);
         _isOfflineSession = [coder decodeBoolForKey:IS_OFFLINE_SESSION_KEY];
         _gameId = [coder decodeIntegerForKey:GAME_ID_KEY];
@@ -67,6 +71,7 @@
     [coder encodeObject:self.sessionId forKey:SESSION_ID_KEY];
     [coder encodeObject:self.playerId forKey:PLAYER_ID_KEY];
     [coder encodeObject:self.logCollectorURL forKey:LOG_COLLECTOR_URL_KEY];
+    [coder encodeObject:self.suggestionServerURL forKey:SUGGESTION_SERVER_URL_KEY];
     [coder encodeObject:self.startDate forKey:START_DATE_KEY];
     [coder encodeBool:self.isOfflineSession forKey:IS_OFFLINE_SESSION_KEY];
     [coder encodeInteger:self.gameId forKey:GAME_ID_KEY];
@@ -138,6 +143,7 @@
     SAFE_ARC_RELEASE(_sessionId);
     SAFE_ARC_RELEASE(_playerId);
     SAFE_ARC_RELEASE(_logCollectorURL);
+    SAFE_ARC_RELEASE(_suggestionServerURL);
     SAFE_ARC_RELEASE(_startDate);
     SAFE_ARC_RELEASE(_events);
     SAFE_ARC_SUPER_DEALLOC();

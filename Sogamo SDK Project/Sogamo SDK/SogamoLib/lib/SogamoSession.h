@@ -14,7 +14,8 @@
 
 @property (nonatomic, strong) NSString *sessionId;
 @property (nonatomic, strong) NSString *playerId;
-@property (nonatomic, strong) NSString *logCollectorURL;
+@property (nonatomic, strong) NSURL *logCollectorURL;
+@property (nonatomic, strong) NSURL *suggestionServerURL;
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic) BOOL isOfflineSession;
 @property (nonatomic) NSInteger gameId;
@@ -24,8 +25,9 @@
 
 - (id)initWithSessionId:(NSString *)aSessionId 
                playerId:(NSString *)aPlayerId 
-                 gameId:(NSInteger)aGameId 
-                  lcURL:(NSString *)lcURL 
+                 gameId:(NSInteger)aGameId
+        logCollectorURL:(NSURL *)logCollectorURL
+    suggestionServerURL:(NSURL *)suggestionServerURL
        isOfflineSession:(BOOL)isOffline;
 
 #pragma mark - Convert to JSON
