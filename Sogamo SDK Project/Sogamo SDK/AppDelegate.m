@@ -37,8 +37,9 @@
                                    @"Muhammad", @"firstname",
                                    @"Mohsin", @"lastname",
                                    nil];
-    [sharedAPI startSessionWithAPIKey:@"4f38af3614434a03af915278b5fc2913" playerId:nil playerDetails:playerDetails];
+    [sharedAPI startSessionWithAPIKey:@"4f38af3614434a03af915278b5fc2913" playerId:@"1024" playerDetails:playerDetails];
 //    [sharedAPI setFlushInterval:10];
+    [self performSelector:@selector(suggestionTest) withObject:nil afterDelay:5];
     return YES;
 }
 
@@ -67,6 +68,19 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)suggestionTest
+{
+    [[SogamoAPI sharedAPI] requestSuggestionOfType:@"buy"
+                                           success:^(NSString *suggestion)
+    {
+        NSLog(@"Suggestion Request: %@", suggestion);
+    }
+                                             error:^(NSError *error)
+    {
+        NSLog(@"Suggestion Request Error: %@", [error localizedDescription]);
+    }];
 }
 
 @end

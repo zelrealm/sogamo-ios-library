@@ -40,6 +40,7 @@
 #import "SogamoAPI.h"
 
 #import "SogamoAuthenticationResponse.h"
+#import "SogamoSuggestionResponse.h"
 #import "SogamoDeviceUtilities.h"
 #import "SogamoJSONUtilities.h"
 #import "SogamoReachability.h"
@@ -85,7 +86,6 @@
 
 #pragma mark Validation
 
-- (BOOL) validateAuthenticationResponse:(NSDictionary *)authenticationResponse;
 - (BOOL) validateEvent:(SogamoEvent *)eventDict;
 
 #pragma mark Session Renewal
@@ -221,6 +221,62 @@ static id sharedAPI = nil;
     dispatch_async(_backgroundQueue, ^(void) {
         [self privateTrackEventWithName:eventName params:paramsDict forSession:self.currentSession];
     });
+}
+
+#pragma mark Request Suggestions
+
+- (void) requestSuggestionOfType:(NSString *)suggestionType
+                         success:(SogamoSuggestionSuccess)successBlock
+                           error:(SogamoSuggestionError)errorBlock
+{
+    if (!self.currentSession || !self.apiKey || !self.playerId) {
+        NSLog(@"Unable to request suggestion. Call startSessionWithAPIKey:playerId:playerDetails: first!");
+        return;
+    }
+    
+    if (!self.currentSession.suggestionServerURL) {
+        NSLog(@"Unable to request suggestion. Suggestion Server URL is missing!");
+        return;
+    }
+    
+    if ([SogamoReachability isURLReachable:self.currentSession.suggestionServerURL]) {
+        NSString *completeSuggestionURLString =
+            [NSString stringWithFormat:@"%@?apiKey=%@&playerId=%@&suggestionType=%@",
+                                        self.currentSession.suggestionServerURL.absoluteString,
+                                        self.apiKey,
+                                        self.playerId,
+                                        suggestionType];
+        NSURL *completeSuggestionURL = [NSURL URLWithString:completeSuggestionURLString];
+        NSURLRequest *suggestionURLRequest = [NSURLRequest requestWithURL:completeSuggestionURL];
+        
+        NSError *error;
+        NSHTTPURLResponse *response;
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:suggestionURLRequest
+                                                     returningResponse:&response
+                                                                 error:&error];
+        
+        if (responseData) {
+            // Successful request
+            NSError *decodingError = nil;
+            
+            id decodedData = SogamoJSONDecode(responseData, &decodingError);
+            if (decodingError) {
+                NSLog(@"Decoding error (%i %@): %@", response.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:response.statusCode], [decodingError localizedDescription]);
+                errorBlock(decodingError);
+            } else {
+                SogamoSuggestionResponse *suggestionResponse = [[SogamoSuggestionResponse alloc] initWithDictionary:(NSDictionary *)decodedData];
+                if (suggestionResponse) {
+                    successBlock(suggestionResponse.suggestion);
+                }
+            }
+        } else {
+            // Failed request
+            errorBlock(error);
+        }
+    } else {
+        NSLog(@"Suggestion Server is unreachable right now. Try again later.");
+        return;
+    }
 }
 
 

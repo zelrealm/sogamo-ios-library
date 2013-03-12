@@ -91,4 +91,23 @@
  */
 - (void) trackEventWithName:(NSString *)eventName params:(NSDictionary *)paramsDict;
 
+#pragma mark Request Suggestions
+
+typedef void (^SogamoSuggestionSuccess)(NSString *suggestionResponse);
+typedef void (^SogamoSuggestionError)(NSError *suggestionError);
+
+/*!
+ @method     requestSuggestionOfType:success:error
+ @abstract   Requests a suggestion of given type
+ @discussion Requests a suggestion of the given type from the Sogamo server and uses blocks to allow asycnhronous responses, 
+             both for successful and unsuccessful requsts.
+ 
+ @param      suggestionType Name of the event to be tracked
+ @param      successBlock   Block for handling successful completion of the request
+ @param      errorBlock     Block for handling errors
+ */
+- (void) requestSuggestionOfType:(NSString *)suggestionType
+                         success:(SogamoSuggestionSuccess)successBlock
+                           error:(SogamoSuggestionError)errorBlock;
+
 @end
