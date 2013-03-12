@@ -239,44 +239,46 @@ static id sharedAPI = nil;
         return;
     }
     
-    if ([SogamoReachability isURLReachable:self.currentSession.suggestionServerURL]) {
-        NSString *completeSuggestionURLString =
+    dispatch_async(_backgroundQueue, ^(void) {
+        if ([SogamoReachability isURLReachable:self.currentSession.suggestionServerURL]) {
+            NSString *completeSuggestionURLString =
             [NSString stringWithFormat:@"%@?apiKey=%@&playerId=%@&suggestionType=%@",
-                                        self.currentSession.suggestionServerURL.absoluteString,
-                                        self.apiKey,
-                                        self.playerId,
-                                        suggestionType];
-        NSURL *completeSuggestionURL = [NSURL URLWithString:completeSuggestionURLString];
-        NSURLRequest *suggestionURLRequest = [NSURLRequest requestWithURL:completeSuggestionURL];
-        
-        NSError *error;
-        NSHTTPURLResponse *response;
-        NSData *responseData = [NSURLConnection sendSynchronousRequest:suggestionURLRequest
-                                                     returningResponse:&response
-                                                                 error:&error];
-        
-        if (responseData) {
-            // Successful request
-            NSError *decodingError = nil;
+             self.currentSession.suggestionServerURL.absoluteString,
+             self.apiKey,
+             self.playerId,
+             suggestionType];
+            NSURL *completeSuggestionURL = [NSURL URLWithString:completeSuggestionURLString];
+            NSURLRequest *suggestionURLRequest = [NSURLRequest requestWithURL:completeSuggestionURL];
             
-            id decodedData = SogamoJSONDecode(responseData, &decodingError);
-            if (decodingError) {
-                NSLog(@"Decoding error (%i %@): %@", response.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:response.statusCode], [decodingError localizedDescription]);
-                errorBlock(decodingError);
-            } else {
-                SogamoSuggestionResponse *suggestionResponse = [[SogamoSuggestionResponse alloc] initWithDictionary:(NSDictionary *)decodedData];
-                if (suggestionResponse) {
-                    successBlock(suggestionResponse.suggestion);
+            NSError *error;
+            NSHTTPURLResponse *response;
+            NSData *responseData = [NSURLConnection sendSynchronousRequest:suggestionURLRequest
+                                                         returningResponse:&response
+                                                                     error:&error];
+            
+            if (responseData) {
+                // Successful request
+                NSError *decodingError = nil;
+                
+                id decodedData = SogamoJSONDecode(responseData, &decodingError);
+                if (decodingError) {
+                    NSLog(@"Decoding error (%i %@): %@", response.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:response.statusCode], [decodingError localizedDescription]);
+                    errorBlock(decodingError);
+                } else {
+                    SogamoSuggestionResponse *suggestionResponse = [[SogamoSuggestionResponse alloc] initWithDictionary:(NSDictionary *)decodedData];
+                    if (suggestionResponse) {
+                        successBlock(suggestionResponse.suggestion);
+                    }
                 }
+            } else {
+                // Failed request
+                errorBlock(error);
             }
         } else {
-            // Failed request
-            errorBlock(error);
+            NSLog(@"Suggestion Server is unreachable right now. Try again later.");
+            return;
         }
-    } else {
-        NSLog(@"Suggestion Server is unreachable right now. Try again later.");
-        return;
-    }
+    });
 }
 
 
