@@ -67,8 +67,6 @@
 #pragma mark Authentication
 
 - (SogamoAuthenticationResponse *) authenticateWithAPIKey:(NSString *)anAPIKey playerId:(NSString *)aPlayerId;
-- (SogamoSession *) createSessionWithAuthenticationResponse:(SogamoAuthenticationResponse *)authenticationResponse;
-- (SogamoSession *) createOfflineSession;
 
 #pragma mark Track Events
 
@@ -90,9 +88,9 @@
 
 #pragma mark Session Renewal
 
-- (BOOL) hasCurrentSessionExpired;
+- (SogamoSession *) createSessionWithAuthenticationResponse:(SogamoAuthenticationResponse *)authenticationResponse;
+- (SogamoSession *) createOfflineSession;
 - (void) getNewSessionIfNeeded;
-- (BOOL) convertOfflineSessions;
 
 #pragma mark Session Persistence
 
@@ -100,9 +98,26 @@
 - (void) saveSessions;
 - (NSString *) sessionsDataFilePath;
 
-#pragma mark Handling Offline Sessions
+#pragma mark Offline Sessions
 
 - (NSString *) generateOfflineSessionKey;
+- (BOOL) convertOfflineSessions;
+- (void) convertOfflineSession:(SogamoSession *)offlineSession withResponse:(SogamoAuthenticationResponse *)response;
+- (NSMutableArray *) convertOfflineEvents:(NSArray *)events withResponse:(SogamoAuthenticationResponse *)response;
+
+#pragma mark Periodic Flush
+
+- (void) startPeriodicFlush:(NSTimer *)timer;
+
+#pragma mark Validation
+
+- (BOOL) validateStartSession;
+
+#pragma mark Convenience Methods
+
+- (BOOL) hasSessionExpired:(SogamoSession *)session;
+- (BOOL) hasCurrentSessionExpired;
+- (BOOL) isCurrentSessionTemporary;
 
 @end
 
@@ -130,6 +145,7 @@ static id sharedAPI = nil;
 
         _playerDetails = [[NSDictionary alloc] init];
         _flushInterval = 0;
+        _currentSession = SAFE_ARC_RETAIN([self createOfflineSession]);
         
         // Register for notifications
         [[NSNotificationCenter defaultCenter] addObserver:self 
@@ -158,15 +174,15 @@ static id sharedAPI = nil;
 
 #pragma mark Property accessors
 
-- (NSString *) playerId
-{
-    // If no playerId has been set by the user, then return the default playerId instead
-    if (_playerId) {
-        return _playerId;
-    } else {
-        return _defaultPlayerId;
-    }
-}
+//- (NSString *) playerId
+//{
+//    // If no playerId has been set by the user, then return the default playerId instead
+//    if (_playerId) {
+//        return _playerId;
+//    } else {
+//        return _defaultPlayerId;
+//    }
+//}
 
 - (void) setFlushInterval:(NSInteger)flushInterval
 {
@@ -199,7 +215,7 @@ static id sharedAPI = nil;
 
 - (void) startSessionWithAPIKey:(NSString *)anAPIKey
 {
-    [self startSessionWithAPIKey:anAPIKey playerId:nil playerDetails:nil];
+    [self startSessionWithAPIKey:anAPIKey playerId:_defaultPlayerId playerDetails:[NSDictionary dictionary]];
 }
 
 - (void) startSessionWithAPIKey:(NSString *)anAPIKey playerId:(NSString *)aPlayerId playerDetails:(NSDictionary *)aPlayerDetails
@@ -207,10 +223,11 @@ static id sharedAPI = nil;
     dispatch_async(_backgroundQueue, ^(void) {
         self.apiKey = anAPIKey;
         self.playerId = aPlayerId;
-        if (aPlayerDetails)
-            self.playerDetails = aPlayerDetails;
-        [self getNewSessionIfNeeded];
-        [self convertOfflineSessions];
+        self.playerDetails = aPlayerDetails;
+        if ([self validateStartSession]) {
+            [self getNewSessionIfNeeded];
+            [self convertOfflineSessions];
+        }
     });    
 }
 
@@ -247,6 +264,7 @@ static id sharedAPI = nil;
              self.apiKey,
              self.playerId,
              suggestionType];
+
             NSURL *completeSuggestionURL = [NSURL URLWithString:completeSuggestionURLString];
             NSURLRequest *suggestionURLRequest = [NSURLRequest requestWithURL:completeSuggestionURL];
             
@@ -265,9 +283,16 @@ static id sharedAPI = nil;
                     NSLog(@"Decoding error (%i %@): %@", response.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:response.statusCode], [decodingError localizedDescription]);
                     errorBlock(decodingError);
                 } else {
-                    SogamoSuggestionResponse *suggestionResponse = [[SogamoSuggestionResponse alloc] initWithDictionary:(NSDictionary *)decodedData];
-                    if (suggestionResponse) {
-                        successBlock(suggestionResponse.suggestion);
+                    NSDictionary *jsonResponseDictionary = (NSDictionary *)decodedData;
+                    if (jsonResponseDictionary[@"error"]) {
+                        NSDictionary *userInfo = @{NSLocalizedDescriptionKey : jsonResponseDictionary[@"error"]};
+                        error = [NSError errorWithDomain:@"Sogamo Server Error" code:100 userInfo:userInfo];
+                        errorBlock(error);
+                    } else {
+                        SogamoSuggestionResponse *suggestionResponse = [[SogamoSuggestionResponse alloc] initWithDictionary:jsonResponseDictionary];
+                        if (suggestionResponse) {
+                            successBlock(suggestionResponse.suggestion);
+                        }
                     }
                 }
             } else {
@@ -325,36 +350,6 @@ static id sharedAPI = nil;
     }
     
     return authenticationResponse;
-}
-
-- (SogamoSession *) createSessionWithAuthenticationResponse:(SogamoAuthenticationResponse *)authenticationResponse
-{
-    if (!authenticationResponse) {
-        NSLog(@"Invalid authentication response! Creating offline response instead");
-        return [self createOfflineSession];
-    }
-    
-    SogamoSession *newSession = SAFE_ARC_AUTORELEASE([[SogamoSession alloc] initWithSessionId:authenticationResponse.sessionId
-                                                                                     playerId:authenticationResponse.playerId
-                                                                                       gameId:authenticationResponse.gameId
-                                                                              logCollectorURL:authenticationResponse.logCollectorURL
-                                                                          suggestionServerURL:authenticationResponse.suggestionServerURL
-                                                                             isOfflineSession:NO]);
-    
-    return newSession;
-}
-
-- (SogamoSession *) createOfflineSession
-{
-    NSLog(@"Generating Offline Session");
-    SogamoSession *newSession = SAFE_ARC_AUTORELEASE([[SogamoSession alloc] initWithSessionId:[self generateOfflineSessionKey]
-                                                                                     playerId:self.playerId
-                                                                                       gameId:-1
-                                                                              logCollectorURL:nil
-                                                                          suggestionServerURL:nil
-                                                                             isOfflineSession:YES]);
-    
-    return newSession;
 }
 
 #pragma mark Track Events
@@ -627,37 +622,51 @@ static id sharedAPI = nil;
 
 #pragma mark Session Creation / Renewal
 
-- (BOOL) hasCurrentSessionExpired
+- (SogamoSession *) createSessionWithAuthenticationResponse:(SogamoAuthenticationResponse *)authenticationResponse
 {
-    if (!self.currentSession.startDate) {
-        NSLog(@"There is no current session");
-        return YES;
+    if (!authenticationResponse) {
+        NSLog(@"Invalid authentication response! Creating offline response instead");
+        return [self createOfflineSession];
     }
     
-    NSTimeInterval currentSessionDuration = [[NSDate date] timeIntervalSinceDate:self.currentSession.startDate];
+    SogamoSession *newSession = SAFE_ARC_AUTORELEASE([[SogamoSession alloc] initWithSessionId:authenticationResponse.sessionId
+                                                                                     playerId:authenticationResponse.playerId
+                                                                                       gameId:authenticationResponse.gameId
+                                                                              logCollectorURL:authenticationResponse.logCollectorURL
+                                                                          suggestionServerURL:authenticationResponse.suggestionServerURL
+                                                                             isOfflineSession:NO]);
     
-    return currentSessionDuration >= SESSION_TIME_OUT_PERIOD;
+    return newSession;
+}
+
+- (SogamoSession *) createOfflineSession
+{
+    NSLog(@"Generating Offline Session");
+    SogamoSession *newSession = SAFE_ARC_AUTORELEASE([[SogamoSession alloc] initWithSessionId:[self generateOfflineSessionKey]
+                                                                                     playerId:self.playerId
+                                                                                       gameId:-1
+                                                                              logCollectorURL:nil
+                                                                          suggestionServerURL:nil
+                                                                             isOfflineSession:YES]);
+    
+    return newSession;
 }
 
 - (void) getNewSessionIfNeeded
 {
-    // If there is an existing session, check to see if it is still valid
-    if (self.currentSession && self.currentSession.startDate) {
-        if ([self hasCurrentSessionExpired]) {
-            NSLog(@"Current session has expired. Getting new session key...");
+    // Check if there an existing current session
+    if (self.currentSession) {
+        // Check if current session is temporary
+        if ([self isCurrentSessionTemporary]) {
             SogamoAuthenticationResponse *authenticationResponse = [self authenticateWithAPIKey:self.apiKey playerId:self.playerId];
             if (authenticationResponse) {
-                self.currentSession = [self createSessionWithAuthenticationResponse:authenticationResponse];
-            } else {
-                self.currentSession = [self createOfflineSession];
+                [self convertOfflineSession:self.currentSession withResponse:authenticationResponse];
             }
-
+            
             [self privateTrackEventWithName:@"session" params:self.playerDetails forSession:self.currentSession];
-            [self.allSessions addObject:self.currentSession];
-            NSLog(@"New session created! Session ID: %@", self.currentSession.sessionId);
+            NSLog(@"Converting temporary session. Session ID: %@", self.currentSession.sessionId);
         } else {
-            NSLog(@"Current session is still valid. No new session key required");
-            // Track the player session update event
+//            NSLog(@"Current session is still valid. No new session key required");
             [self privateTrackEventWithName:@"session" params:[NSDictionary dictionary] forSession:self.currentSession];
         }
     } else {
@@ -670,54 +679,12 @@ static id sharedAPI = nil;
         }
         
         [self privateTrackEventWithName:@"session" params:self.playerDetails forSession:self.currentSession];
-        [self.allSessions addObject:self.currentSession];
         NSLog(@"New session created! Session ID: %@", self.currentSession.sessionId);
     }
-}
-
-- (BOOL) convertOfflineSessions
-{
-    if (!self.allSessions && [self.allSessions count] == 0) {
-        return NO;
+    
+    if (![self.allSessions containsObject:self.currentSession]) {
+        [self.allSessions addObject:self.currentSession];
     }
-    
-    BOOL result = YES;
-    
-    for (SogamoSession *session in self.allSessions) {
-        if (session.isOfflineSession) {
-            // Request a new session key for the offline session
-            SogamoAuthenticationResponse *authenticationResponse = [self authenticateWithAPIKey:self.apiKey playerId:self.playerId];
-            if (authenticationResponse) {
-                session.sessionId = authenticationResponse.sessionId;
-                session.gameId = authenticationResponse.gameId;
-                session.logCollectorURL = authenticationResponse.logCollectorURL;
-                session.suggestionServerURL = authenticationResponse.suggestionServerURL;
-                session.isOfflineSession = NO;
-                
-                // Update all the tracked events data
-                for (SogamoEvent *event in session.events) {
-                    NSMutableDictionary *eventData = event.eventParams;
-                    
-                    for (NSString *parameterKey in [eventData allKeys]) {
-                        if ([parameterKey isEqualToString:@"session_id"] || [parameterKey isEqualToString:@"sessionId"]) {
-                            [eventData setObject:session.sessionId forKey:parameterKey];
-                        }
-                        if ([parameterKey isEqualToString:@"game_id"] || [parameterKey isEqualToString:@"gameId"]) {
-                            [eventData setObject:[NSNumber numberWithInteger:session.gameId] forKey:parameterKey];
-                        }                                 
-                    }
-                }
-                                          
-                NSLog(@"Successfully converted an offline session.");
-            } else {
-                NSLog(@"Attempt to convert an offline session failed.");
-                result = NO;
-                break;
-            }
-        }
-    }
-    
-    return result;
 }
 
 #pragma mark Session Persistence
@@ -734,7 +701,14 @@ static id sharedAPI = nil;
         
         //Restore the most recent session (will be the last one in the array)
         if ([self.allSessions count] > 0) {
-            self.currentSession = [self.allSessions objectAtIndex:[self.allSessions count] - 1];
+            // Check if the most recent session has expired
+            SogamoSession *mostRecentSession = [self.allSessions objectAtIndex:[self.allSessions count] - 1];
+            if ([self hasSessionExpired:mostRecentSession]) {
+                NSLog(@"Current session has expired. Using Temporary session instead");
+            } else {
+                NSLog(@"Current session is still valid. No new session key required");
+                self.currentSession = mostRecentSession;
+            }
         }
 //        NSLog(@"All Sessions: %@", self.allSessions);
     } else {
@@ -765,7 +739,7 @@ static id sharedAPI = nil;
     return [documentsDirectory stringByAppendingPathComponent:SESSIONS_DATA_FILE_NAME];
 }
 
-#pragma mark Handling Offline Sessions
+#pragma mark Offline Sessions
 
 - (NSString *) generateOfflineSessionKey
 {
@@ -778,7 +752,99 @@ static id sharedAPI = nil;
     return SAFE_ARC_AUTORELEASE(offlineSessionKey);
 }
 
-#pragma mark Flush Timer
+- (BOOL) convertOfflineSessions
+{
+    if (!self.allSessions && [self.allSessions count] == 0) {
+        return NO;
+    }
+    
+    BOOL result = YES;
+    
+    for (SogamoSession *session in self.allSessions) {
+        if (session.isOfflineSession) {
+            // Request a new session key for the offline session
+            SogamoAuthenticationResponse *authenticationResponse = [self authenticateWithAPIKey:self.apiKey playerId:self.playerId];
+            if (authenticationResponse) {                
+                [self convertOfflineSession:session withResponse:authenticationResponse];
+            } else {
+                NSLog(@"Attempt to convert an offline session failed.");
+                result = NO;
+                break;
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (void) convertOfflineSession:(SogamoSession *)offlineSession withResponse:(SogamoAuthenticationResponse *)response
+{
+    if (!offlineSession) {
+        NSLog(@"Offline session is nil!");
+        return;
+    }
+    
+    if (!response) {
+        NSLog(@"Authentication Response is nil!");
+        return;
+    }
+
+    offlineSession.sessionId = response.sessionId;
+    offlineSession.playerId = response.playerId;
+    offlineSession.gameId = response.gameId;
+    offlineSession.logCollectorURL = response.logCollectorURL;
+    offlineSession.suggestionServerURL = response.suggestionServerURL;
+    offlineSession.isOfflineSession = NO;
+    
+    // Convert all existing events
+    NSMutableArray *convertedEvents = [self convertOfflineEvents:offlineSession.events withResponse:response];
+    if (convertedEvents) {
+        offlineSession.events = convertedEvents;
+    }
+    
+    NSLog(@"Successfully converted an offline session");
+}
+
+- (NSMutableArray *) convertOfflineEvents:(NSArray *)events withResponse:(SogamoAuthenticationResponse *)response
+{
+    if (!events) {
+        NSLog(@"Events is nil!");
+        return nil;
+    }
+    
+    if (!response) {
+        NSLog(@"Authentication Response is nil");
+        return nil;
+    }
+    
+    NSMutableArray *convertedEvents = [NSMutableArray array];
+    
+    for (SogamoEvent *event in events) {
+        if (event.eventParams[@"session_id"]) {
+            event.eventParams[@"session_id"] = response.sessionId;
+        } else if (event.eventParams[@"sessionId"]) {
+            event.eventParams[@"sessionId"] = response.sessionId;
+        }
+        
+        if (event.eventParams[@"player_id"]) {
+            event.eventParams[@"player_id"] = response.sessionId;
+        } else if (event.eventParams[@"playerId"]) {
+            event.eventParams[@"playerId"] = response.sessionId;
+        }
+
+        if (event.eventParams[@"game_id"]) {
+            event.eventParams[@"game_id"] = response.sessionId;
+        } else if (event.eventParams[@"gameId"]) {
+            event.eventParams[@"gameId"] = response.sessionId;
+        }
+
+        [convertedEvents addObject:event];
+    }
+
+    return convertedEvents;
+}
+
+#pragma mark Periodic Flush
 
 - (void) startPeriodicFlush:(NSTimer *)timer
 {
@@ -792,6 +858,71 @@ static id sharedAPI = nil;
             }
         }
     });
+}
+
+#pragma mark Validation
+
+- (BOOL) validateStartSession
+{
+    BOOL result = YES;
+    
+    if (!self.apiKey || [self.apiKey isEqualToString:@""]) {
+        NSLog(@"API Key is nil or empty!");
+        result = NO;
+    }
+    
+    if (!self.playerId || [self.playerId isEqualToString:@""]) {
+        NSLog(@"Player ID is nil or empty!");
+        result = NO;
+    }
+    
+    if (!self.playerDetails) {
+        NSLog(@"API Key is nil!");
+        result = NO;
+    }
+    
+    return result;
+}
+
+#pragma mark Convenience Methods
+
+- (BOOL) hasSessionExpired:(SogamoSession *)session
+{
+    if (!session) {
+        NSLog(@"Session is nil!");
+        return YES;
+    }
+    
+    if (!session.startDate) {
+        NSLog(@"Session has no start date!");
+        return YES;
+    }
+    
+    NSTimeInterval currentSessionDuration = [[NSDate date] timeIntervalSinceDate:session.startDate];
+    
+    return currentSessionDuration >= SESSION_TIME_OUT_PERIOD;
+}
+
+- (BOOL) hasCurrentSessionExpired
+{
+    if (!self.currentSession.startDate) {
+        NSLog(@"There is no current session");
+        return YES;
+    }
+    
+    NSTimeInterval currentSessionDuration = [[NSDate date] timeIntervalSinceDate:self.currentSession.startDate];
+    
+    return currentSessionDuration >= SESSION_TIME_OUT_PERIOD;
+}
+
+- (BOOL) isCurrentSessionTemporary
+{
+    if (!self.currentSession) {
+        NSLog(@"Current session is nil!");
+        return NO;
+    }
+    
+    return (self.currentSession.isOfflineSession && self.currentSession.playerId == nil);
 }
 
 #pragma mark Notification Handling
