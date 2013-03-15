@@ -4,6 +4,28 @@
 <dict>
 	<key>api_definitions</key>
 	<dict>
+		<key>suggestionResponse</key>
+		<dict>
+			<key>parameters</key>
+			<dict>
+				<key>response</key>
+				<dict>
+					<key>required</key>
+					<string>YES</string>
+					<key>type</key>
+					<string>BOOL</string>
+				</dict>
+				<key>suggestion</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<string>YES</string>
+				</dict>
+			</dict>
+			<key>event_index</key>
+			<string>logDatetime</string>
+		</dict>
 		<key>session</key>
 		<dict>
 			<key>event_index</key>
@@ -137,6 +159,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>inviteId</key>
 				<dict>
 					<key>required</key>
@@ -146,10 +175,10 @@
 				</dict>
 				<key>inviteType</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>recipientIds</key>
 				<dict>
@@ -160,10 +189,10 @@
 				</dict>
 				<key>screenName</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>playerId</key>
 				<dict>
@@ -174,38 +203,38 @@
 				</dict>
 				<key>attributes</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>credit</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>level</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>experience</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>virtualCurrency</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>logDatetime</key>
 				<dict>
@@ -229,6 +258,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>inviteId</key>
 				<dict>
 					<key>required</key>
@@ -265,6 +301,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>playerId</key>
 				<dict>
 					<key>required</key>
@@ -274,38 +317,38 @@
 				</dict>
 				<key>attributes</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>credit</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>level</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>experience</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>virtualCurrency</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>logDatetime</key>
 				<dict>
@@ -330,10 +373,10 @@
 				</dict>
 				<key>notifiSubject</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>recipientIds</key>
 				<dict>
@@ -344,10 +387,10 @@
 				</dict>
 				<key>notifiText</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 			</dict>
 		</dict>
@@ -357,6 +400,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>notifiId</key>
 				<dict>
 					<key>required</key>
@@ -393,6 +443,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>playerId</key>
 				<dict>
 					<key>required</key>
@@ -402,31 +459,31 @@
 				</dict>
 				<key>attributes</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>credit</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>experience</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>virtualCurrency</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>logDatetime</key>
 				<dict>
@@ -444,17 +501,17 @@
 				</dict>
 				<key>giftRequestId</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>giftItems</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>recipientIds</key>
 				<dict>
@@ -465,10 +522,10 @@
 				</dict>
 				<key>screenName</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 			</dict>
 		</dict>
@@ -478,6 +535,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>giftRequestId</key>
 				<dict>
 					<key>required</key>
@@ -514,6 +578,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>playerId</key>
 				<dict>
 					<key>required</key>
@@ -523,38 +594,38 @@
 				</dict>
 				<key>attributes</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>credit</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>level</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>experience</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>virtualCurrency</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>logDatetime</key>
 				<dict>
@@ -586,17 +657,17 @@
 				</dict>
 				<key>storyMessage</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>storyType</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 			</dict>
 		</dict>
@@ -606,6 +677,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>storyId</key>
 				<dict>
 					<key>required</key>
@@ -642,6 +720,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>playerId</key>
 				<dict>
 					<key>required</key>
@@ -651,38 +736,38 @@
 				</dict>
 				<key>attributes</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>credit</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>level</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>experience</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>virtualCurrency</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>logDatetime</key>
 				<dict>
@@ -714,17 +799,17 @@
 				</dict>
 				<key>storyMessage</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>storyType</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 			</dict>
 		</dict>
@@ -734,6 +819,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>storyId</key>
 				<dict>
 					<key>required</key>
@@ -770,6 +862,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>playerId</key>
 				<dict>
 					<key>required</key>
@@ -779,38 +878,38 @@
 				</dict>
 				<key>attributes</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>credit</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>level</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>experience</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>virtualCurrency</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>logDatetime</key>
 				<dict>
@@ -835,24 +934,24 @@
 				</dict>
 				<key>recipientIds</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>postMessage</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>postType</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 			</dict>
 		</dict>
@@ -862,6 +961,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>postId</key>
 				<dict>
 					<key>required</key>
@@ -898,6 +1004,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>playerId</key>
 				<dict>
 					<key>required</key>
@@ -908,37 +1021,37 @@
 				<key>attributes</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>credit</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>level</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>experience</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>virtualCurrency</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>logDatetime</key>
 				<dict>
@@ -956,10 +1069,10 @@
 				</dict>
 				<key>presentLevel</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 				<key>levelupDatetime</key>
 				<dict>
@@ -970,10 +1083,10 @@
 				</dict>
 				<key>itemsUnlocked</key>
 				<dict>
-					<key>required</key>
-					<true/>
 					<key>type</key>
 					<string>NSString</string>
+					<key>required</key>
+					<false/>
 				</dict>
 			</dict>
 		</dict>
@@ -983,6 +1096,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>playerId</key>
 				<dict>
 					<key>required</key>
@@ -993,49 +1113,49 @@
 				<key>attributes</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>itemsInUse</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>itemsInInventory</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>credit</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>level</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>experience</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>virtualCurrency</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
@@ -1063,35 +1183,35 @@
 				<key>itemsRemaining</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>itemsRemainingQuantity</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>itemsBought</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>itemsBoughtQuantity</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>itemsBoughtPrice</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
@@ -1103,6 +1223,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>playerId</key>
 				<dict>
 					<key>required</key>
@@ -1127,28 +1254,28 @@
 				<key>attributes</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>credit</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>level</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>experience</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
@@ -1162,7 +1289,7 @@
 				<key>logAction</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
@@ -1174,6 +1301,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>gameId</key>
 				<dict>
 					<key>required</key>
@@ -1212,7 +1346,7 @@
 				<key>remarks</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
@@ -1231,6 +1365,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>gameId</key>
 				<dict>
 					<key>required</key>
@@ -1248,7 +1389,7 @@
 				<key>level</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
@@ -1262,28 +1403,28 @@
 				<key>creditSpent</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>resourceBought</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>exchangeRate</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSNumber</string>
 				</dict>
 				<key>realCurrency</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
@@ -1302,6 +1443,13 @@
 			<string>logDatetime</string>
 			<key>parameters</key>
 			<dict>
+				<key>successful</key>
+				<dict>
+					<key>type</key>
+					<string>NSString</string>
+					<key>required</key>
+					<true/>
+				</dict>
 				<key>playerId</key>
 				<dict>
 					<key>required</key>
@@ -1312,35 +1460,35 @@
 				<key>attributes</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>credit</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>level</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>experience</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>virtualCurrency</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
@@ -1361,28 +1509,28 @@
 				<key>type</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>description</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
-					<string>NSDate</string>
+					<string>NSString</string>
 				</dict>
 				<key>requirements</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>rewards</key>
 				<dict>
 					<key>required</key>
-					<true/>
+					<false/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
@@ -1390,6 +1538,6 @@
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>1.0</string>
+	<string>1.1</string>
 </dict>
 </plist>
