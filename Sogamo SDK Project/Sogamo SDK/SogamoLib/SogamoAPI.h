@@ -77,7 +77,7 @@
                                                             @"John", @"firstname",
                                                             @"Doe", @"lastname", nil];
  
-             Numeric parameter values should be wrapped in NSNumber objects.
+             Numeric AND boolean parameter values should be wrapped in NSNumber objects.
              Datetime parameter values should be given as NSDate objects.
  
              Note: The following parameters need not be included as they will be populated automatically:
@@ -85,6 +85,9 @@
              - gameId / game_id
              - playerId / player_id
              - login_datetime
+             - logDatetime
+             - updatedDatetime
+             - last_active_datetime
 
  @param      eventName Name of the event to be tracked
  @param      params      A NSDictionary of the all the parameters for the event

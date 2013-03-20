@@ -46,17 +46,19 @@ You can set the facebookId: parameter  to nil if that information is unavailable
 ## Tracking Events ##
 After initializing the SogamoAPI singleton object, you are ready to track events. This can be done with the following method:
 
-```objective-c
-SogamoAPI *sogamoAPI = [SogamoAPI sharedAPI];
-[sogamoAPI trackEventWithName:@"playerTopUp" 
+Example Code:
+
+	SogamoAPI *sogamoAPI = [SogamoAPI sharedAPI];
+	[sogamoAPI trackEventWithName:@"playerTopUp" 
 			params:[NSDictionary dictionaryWithObjectsAndKeys:
 				@"First top up", @"remarks",
 				[NSNumber numberWithInteger:100], @"currencyEarned",
 				[NSNumber numberWithInteger:200], @"currencyBalance",
+				[NSNumber numberWithBool:YES], @"successful"
 				[NSDate date], @"logDatetime", nil]];
-```
 
-Note: Event params are to be stored in a NSDictionary object. Numeric parameters must be wrapped inside a NSNumber object, and similarly, datetime parameters are to be represented as NSDate objects.
+
+Note: Event params are to be stored in a NSDictionary object. Numeric and boolean parameters must be wrapped inside a NSNumber object, and similarly, datetime parameters are to be represented as NSDate objects.
 
 For a full list of the events that can be tracked, visit the [Sogamo website](http://www.sogamo.com)
 
