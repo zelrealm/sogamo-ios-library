@@ -589,7 +589,13 @@ static id sharedAPI = nil;
                 id parameterValue = [eventDataDict objectForKey:parameterKey];
                 
                 NSString *parameterType = [parameterDict objectForKey:DEFINITIONS_DATA_TYPE_KEY];
-                Class expectedParameterValueClass = NSClassFromString(parameterType);
+                Class expectedParameterValueClass = NULL;
+                if ([parameterType isEqualToString:@"BOOL"]) {
+                    expectedParameterValueClass = [NSNumber class];
+                } else {
+                    expectedParameterValueClass = NSClassFromString(parameterType);
+                }
+                
                 if (![parameterValue isKindOfClass:expectedParameterValueClass]) {
                     NSLog(@"Value for parameter %@ is not the correct type!", parameterKey);
                     result = NO;
