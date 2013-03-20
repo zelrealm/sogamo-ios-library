@@ -11,16 +11,16 @@
 				<key>response</key>
 				<dict>
 					<key>required</key>
-					<string>YES</string>
+					<true/>
 					<key>type</key>
 					<string>NSString</string>
 				</dict>
 				<key>suggestion</key>
 				<dict>
+					<key>required</key>
+					<true/>
 					<key>type</key>
 					<string>NSString</string>
-					<key>required</key>
-					<string>YES</string>
 				</dict>
 			</dict>
 			<key>event_index</key>
