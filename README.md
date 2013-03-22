@@ -72,7 +72,7 @@ Event Data is _flushed_ (i.e transmitted) to the Sogamo server at several points
 ### Periodic Flush ###
 When the periodic flush is enabled, SogamoAPI will flush accumulated event data at the specified intervals.
 
-_Note: The value for the flushInterval property must be in seconds, and between 0 and 3600._
+_Note: The value for the flushInterval property must be in seconds, and between 0 (the default) and 3600._
 
 Example:
 
@@ -95,6 +95,10 @@ Example:
         NSLog(@"Suggestion Request Error: %@", [error localizedDescription]);
         // Handle failed suggestion request
     }];
+
+## Performance Implications ##
+
+The Sogamo Library runs all of its major functions (Start / Closing a session, flushing data) on a background thread, so it does not affect the performance of your application.
 
 [Copy into Xcode]: https://github.com/zelrealm/Sogamo-iOS-library/raw/master/Docs/Images/Copy%20into%20Xcode.png "Copy into Xcode"
 [Add SystemConfiguration]: https://github.com/zelrealm/Sogamo-iOS-library/raw/master/Docs/Images/Added%20SystemConfiguration%20framework.png "Add System Configuration"
