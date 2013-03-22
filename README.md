@@ -39,7 +39,8 @@ And that's it.
 The first thing you need to do is to initialize a SogamoAPI session with your project API key. We recommend doing this in `applicationDidFinishLaunching:` or
 `application:didFinishLaunchingWithOptions` in your Application delegate, with the following method:
 
-	[[SogamoAPI sharedAPI] startSessionWithAPIKey:YOUR_PROJECT_KEY facebookId:USERS_FACEBOOK_ID_OR_NIL];
+	[[SogamoAPI sharedAPI] startSessionWithAPIKey:YOUR_PROJECT_KEY 
+										facebookId:USERS_FACEBOOK_ID_OR_NIL];
 
 You can set the facebookId: parameter  to nil if that information is unavailable. We however strongly recommend that you include the Facebook ID of the user when starting the session. This will allow you to gain insight into how your users behave across all other Sogamo-linked applications that they use. Obtaining the user's Facebook ID is easy with the [Facebook SDK](https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/3.1/).
 
@@ -61,6 +62,39 @@ Example Code:
 Note: Event params are to be stored in a NSDictionary object. Numeric and boolean parameters must be wrapped inside a NSNumber object, and similarly, datetime parameters are to be represented as NSDate objects.
 
 For a full list of the events that can be tracked, visit the [Sogamo website](http://www.sogamo.com)
+
+## Sending Data ##
+Event Data is _flushed_ (i.e transmitted) to the Sogamo server at several points:
+
+- When the app is put into the background (i.e when the user presses the Home button on the device)
+- Whenever the periodic flush is triggered (if it is enabled)
+
+### Periodic Flush ###
+When the periodic flush is enabled, SogamoAPI will flush accumulated event data at the specified intervals.
+
+_Note: The value for the flushInterval property must be in seconds, and between 0 and 3600._
+
+Example:
+
+	[[SogamoAPI sharedAPI] setFlushInterval:30]; // Event Data will be flushed every 30s
+
+
+## Suggestions ##
+Suggestions can be requsted from the Sogamo servers via the `requestSuggestionOfType:success:error:` method, which requires the suggestion type as a parameter, along with blocks to handle both success and error outcomes.
+
+Example:
+
+    [[SogamoAPI sharedAPI] requestSuggestionOfType:@"buy"
+                                           success:^(NSString *suggestion)
+    {
+        NSLog(@"Suggestion Request: %@", suggestion);
+        // Handle successful suggestion request
+    }
+                                             error:^(NSError *error)
+    {
+        NSLog(@"Suggestion Request Error: %@", [error localizedDescription]);
+        // Handle failed suggestion request
+    }];
 
 [Copy into Xcode]: https://github.com/zelrealm/Sogamo-iOS-library/raw/master/Docs/Images/Copy%20into%20Xcode.png "Copy into Xcode"
 [Add SystemConfiguration]: https://github.com/zelrealm/Sogamo-iOS-library/raw/master/Docs/Images/Added%20SystemConfiguration%20framework.png "Add System Configuration"
