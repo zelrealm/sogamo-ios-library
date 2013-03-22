@@ -87,9 +87,6 @@
 		F49AD1A71637E715002B3EEF /* SogamoEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SogamoEvent.m; sourceTree = "<group>"; };
 		F49AD1AA1637E73B002B3EEF /* SogamoSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SogamoSession.h; sourceTree = "<group>"; };
 		F49AD1AB1637E73B002B3EEF /* SogamoSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SogamoSession.m; sourceTree = "<group>"; };
-		F4C9FD91164FA39E007B7C92 /* SogamoAPI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SogamoAPI-Info.plist"; sourceTree = "<group>"; };
-		F4C9FD93164FA39E007B7C92 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F4C9FD95164FA39E007B7C92 /* SogamoAPI-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SogamoAPI-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +120,6 @@
 			children = (
 				F474998915FF508800BA448A /* Sogamo SDK */,
 				F47499AA15FF533400BA448A /* Unit Tests */,
-				F4C9FD8F164FA39E007B7C92 /* SogamoAPI */,
 				F474998215FF508800BA448A /* Frameworks */,
 				F474998015FF508800BA448A /* Products */,
 			);
@@ -230,24 +226,6 @@
 				F450676A16EF428900FAF500 /* SogamoSuggestionResponse.m */,
 			);
 			path = lib;
-			sourceTree = "<group>";
-		};
-		F4C9FD8F164FA39E007B7C92 /* SogamoAPI */ = {
-			isa = PBXGroup;
-			children = (
-				F4C9FD90164FA39E007B7C92 /* Supporting Files */,
-			);
-			path = SogamoAPI;
-			sourceTree = "<group>";
-		};
-		F4C9FD90164FA39E007B7C92 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F4C9FD91164FA39E007B7C92 /* SogamoAPI-Info.plist */,
-				F4C9FD92164FA39E007B7C92 /* InfoPlist.strings */,
-				F4C9FD95164FA39E007B7C92 /* SogamoAPI-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -412,14 +390,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				F47499AE15FF533400BA448A /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		F4C9FD92164FA39E007B7C92 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F4C9FD93164FA39E007B7C92 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
