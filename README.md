@@ -16,7 +16,9 @@ The repository contains two folders:
 Adding the Sogamo to your Xcode project is just a few easy steps:
 
 1. Add the SogamoAPi Framework
-	a. Drag and drop the **SogamoAPI.embeddedframework** folder into your project. 
+	a. Drag and drop the **SogamoLib** folder (located at **Sogamo SDK Project/Sogamo SDK/SogamoLib**) into your project. 
+	
+	![Folder Structure][Folder Structure]
 	b. Check the "Copy items into destination's group's folder" and select 'Create groups for any added folders'
 ![Copy][Copy into Xcode]
 
@@ -30,7 +32,7 @@ Adding the Sogamo to your Xcode project is just a few easy steps:
 	g. (optional) Drag and drop the added framework to the 'Frameworks' group
 ![Add SystemConfiguration Framework][Add SystemConfiguration]
 
-3. Add `#import <SogamoAPI/SogamoAPI.h>` to all classes that call SogamoAPI functions
+3. Add `#import "SogamoAPI.h"` to all classes that call SogamoAPI functions
 		
 And that's it. 
 
@@ -100,5 +102,6 @@ Example:
 
 The Sogamo Library runs all of its major functions (Start / Closing a session, flushing data) on a background thread, so it does not affect the performance of your application.
 
+[Folder Structure]: https://raw.github.com/zelrealm/sogamo-ios-library/master/Docs/Images/Folder%20Structure.png "Folder Structure" 
 [Copy into Xcode]: https://github.com/zelrealm/Sogamo-iOS-library/raw/master/Docs/Images/Copy%20into%20Xcode.png "Copy into Xcode"
 [Add SystemConfiguration]: https://github.com/zelrealm/Sogamo-iOS-library/raw/master/Docs/Images/Added%20SystemConfiguration%20framework.png "Add System Configuration"
