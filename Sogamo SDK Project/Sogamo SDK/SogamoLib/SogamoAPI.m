@@ -451,22 +451,23 @@ static id sharedAPI = nil;
                 continue;
             }
             
-            NSMutableString *urlString = [NSMutableString stringWithFormat:@"%@?", flushURL.absoluteString];
+            NSMutableString *postBody = [[NSMutableString alloc] init];
             
             // Add each event as a param to the url string
             for (int i=0; i<[jsonEvents count]; i++) {
                 NSString *encodedJSONEvent = [NSString stringWithFormat:@"%i=%@&", i, [jsonEvents[i] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-                [urlString appendString:encodedJSONEvent];
+                [postBody appendString:encodedJSONEvent];
 //                NSLog(@"%@", jsonEvents[i]);
             }
             
             // Delete trailing & symbol
-            [urlString deleteCharactersInRange:NSMakeRange([urlString length]-1, 1)];
-//            NSLog(@"%@", urlString);
+            [postBody deleteCharactersInRange:NSMakeRange([postBody length]-1, 1)];
+//            NSLog(@"%@", postBody);
             
             // Attempt to send aggregated session data
-            NSURL *url = [NSURL URLWithString:urlString];
-            NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:flushURL];
+            [urlRequest setHTTPMethod:@"POST"];
+            [urlRequest setHTTPBody:[postBody dataUsingEncoding:NSUTF8StringEncoding]];
             
             NSError *connectionError = nil;
             NSHTTPURLResponse *response = nil;
