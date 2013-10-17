@@ -1,5 +1,5 @@
 # Sogamo Analytics API on iOS #
-If you want to integrate th Sogamo Analytics API with your iPhone / iPad application, first download the latest [zip archive](http://sogamp.com/) and extract the files. 
+To integrate th Sogamo Analytics API with your iPhone / iPad application, first download the latest [zip archive](http://sogamo.com/) and extract the files. 
 
 The repository contains two folders:
 
@@ -44,7 +44,7 @@ The first thing you need to do is to initialize a SogamoAPI session with your pr
 	[[SogamoAPI sharedAPI] startSessionWithAPIKey:YOUR_PROJECT_KEY 
 										facebookId:USERS_FACEBOOK_ID_OR_NIL];
 
-You can set the facebookId: parameter  to nil if that information is unavailable. We however strongly recommend that you include the Facebook ID of the user when starting the session. This will allow you to gain insight into how your users behave across all other Sogamo-linked applications that they use. Obtaining the user's Facebook ID is easy with the [Facebook SDK](https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/3.1/).
+You can set the facebookId: parameter to nil if that information is unavailable. We, however, strongly recommend that you include the Facebook ID of the user when starting the session. This will allow you to gain insight into how your users behave across all other Sogamo-linked applications that they use. Obtaining the user's Facebook ID is easy with the [Facebook SDK](https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/3.1/).
 
 ## Tracking Events ##
 After initializing the SogamoAPI singleton object, you are ready to track events. This can be done with the following method:
