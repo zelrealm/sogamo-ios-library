@@ -16,22 +16,31 @@ The repository contains two folders:
 Adding the Sogamo to your Xcode project is just a few easy steps:
 
 1. Add the SogamoAPi Framework
+
 	a. Drag and drop the **SogamoLib** folder (located at **Sogamo SDK Project/Sogamo SDK/SogamoLib**) into your project. 
 	
 	![Folder Structure][Folder Structure]
+	
 	b. Check the "Copy items into destination's group's folder" and select 'Create groups for any added folders'
 ![Copy][Copy into Xcode]
 
 2. Add the SystemConfiguration Framework.
-	a. In the Project navigator, select your project
-	b. Select your target
-	c. Select the 'Build Phases' tab
-	d. Open 'Link Binaries with Libraries' expander
-	e. Click the '+' button
-	f. Select the **SystemConfiguration.framework** from the list (Or use the search field)
-	g. (optional) Drag and drop the added framework to the 'Frameworks' group
-![Add SystemConfiguration Framework][Add SystemConfiguration]
 
+	a. In the Project navigator, select your project
+
+	b. Select your target
+	
+	c. Select the 'Build Phases' tab
+	
+	d. Open 'Link Binaries with Libraries' expander
+	
+	e. Click the '+' button
+	
+	f. Select the **SystemConfiguration.framework** from the list (Or use the search field)
+	
+	g. (optional) Drag and drop the added framework to the 'Frameworks' group
+	
+![Add SystemConfiguration Framework][Add SystemConfiguration]
 3. Add `#import "SogamoAPI.h"` to all classes that call SogamoAPI functions
 		
 And that's it. 
